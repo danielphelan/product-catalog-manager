@@ -1,0 +1,25 @@
+product_id,title,price,store_id,store_city,store_region,stock_count
+1,Nike Air Max,100,101,Dublin,EU,8
+2,Adidas Tee ,45,101,Dublin,EU,9
+1,Nike Air Max,100,109,New York,US,12
+3,Vans Trainers,89.99,117,Dublin,EU,25
+4,Adidas Gazelle,119,109,New York,US,12
+1,Nike Air Max,100,111,London,EU,7
+3,Vans Trainers,89.99,116,Boston,US,18
+7,Nike Hooded Top,79.99,116,Boston,US,0
+2,Adidas Tee,45,111,London,EU,0
+1,Nike Air Max,100,117,Dublin,EU,4
+4,Adidas Gazelle,119,111,London,EU,8
+3,Vans Trainers,89.99,119,Paris,EU,9
+8,Nike White Tee,49,119,Paris,EU,110
+9,Puma King,99.99,117,Dublin,EU,24
+7,Nike Hooded Top,79.99,101,Dublin,EU,0
+8,Nike White Tee,49,109,New York,US,20
+9,Puma King,99.99,116,Boston,US,14
+14,Nike Air Force 1,80,119,Paris,EU,11
+16,Nike Zoom Trainer,119.99,101,Dublin,EU,22
+3,Vans Trainers,89.99,111,London,EU,18
+14,Nike Air Force 1,80,101,Dublin,EU,22
+18,Nike Air Force Women's,79,111,London,EU,8
+20,"Adidas, Zoom Shoes",49,116,Boston,US,10
+9,Puma King,99.99,109,New York,US,2
