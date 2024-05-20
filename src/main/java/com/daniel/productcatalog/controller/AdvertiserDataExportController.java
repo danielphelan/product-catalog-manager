@@ -21,7 +21,7 @@ public class AdvertiserDataExportController {
           .body("Accept header must be 'application/json' or 'text/csv'");
     }
 
-    return ResponseEntity.ok("Exprorting data in the format: " + acceptHeader);
+    return ResponseEntity.ok("Exporting data in the format: " + acceptHeader);
   }
 
 }
