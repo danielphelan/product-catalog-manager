@@ -3,6 +3,7 @@ package com.daniel.productcatalog.service;
 import com.daniel.productcatalog.entity.Product;
 import com.daniel.productcatalog.repository.ProductRepository;
 import com.daniel.productcatalog.repository.StoreInventoryRepository;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +32,26 @@ public class ProductService {
   }
 
   public Product updateProduct(Integer productId, Product updatedProduct) {
-    productRepository.findById(productId)
+    Product existingProduct = productRepository.findById(productId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found with id " + productId));
 
-    productRepository.save(updatedProduct);
-    return updatedProduct;
+    updateProductFields(existingProduct, updatedProduct);
+
+    productRepository.save(existingProduct);
+    return existingProduct;
+  }
+
+  private void updateProductFields(Product existingProduct, Product updatedProduct) {
+    if (!Objects.equals(existingProduct.getTitle(), updatedProduct.getTitle())) {
+      existingProduct.setTitle(updatedProduct.getTitle());
+    }
+    if (!Objects.equals(existingProduct.getPrice(), updatedProduct.getPrice()) && updatedProduct.getPrice() >= 0) {
+      existingProduct.setPrice(updatedProduct.getPrice());
+    }
+    if (!Objects.equals(existingProduct.getDiscountPercentage(), updatedProduct.getDiscountPercentage())
+        && updatedProduct.getDiscountPercentage() >= 0 && updatedProduct.getDiscountPercentage() <= 100) {
+      existingProduct.setDiscountPercentage(updatedProduct.getDiscountPercentage());
+    }
   }
 
   public void deleteProduct(Integer productId) {

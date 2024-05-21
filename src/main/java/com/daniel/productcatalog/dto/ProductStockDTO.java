@@ -1,5 +1,10 @@
 package com.daniel.productcatalog.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ProductStockDTO {
 
   private Integer productId;
@@ -12,28 +17,5 @@ public class ProductStockDTO {
     this.totalStockCount = totalStockCount;
   }
 
-  public Integer getProductId() {
-    return productId;
-  }
-
-  public void setProductId(Integer productId) {
-    this.productId = productId;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public Integer getTotalStockCount() {
-    return totalStockCount;
-  }
-
-  public void setTotalStockCount(Integer totalStockCount) {
-    this.totalStockCount = totalStockCount;
-  }
 }
 

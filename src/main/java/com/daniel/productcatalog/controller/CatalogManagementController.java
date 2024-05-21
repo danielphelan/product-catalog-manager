@@ -41,12 +41,6 @@ public class CatalogManagementController {
     return ResponseEntity.ok(inventoryList);
   }
 
-  @GetMapping("/stores")
-  public ResponseEntity<List<Store>> getAllStores(@RequestParam(required = false) String region) {
-    List<Store> stores = storeService.findStoresByRegion(region);
-    return ResponseEntity.ok(stores);
-  }
-
   @GetMapping("/products/total-stock")
   public ResponseEntity<List<ProductStockDTO>> getAllProductsWithTotalStock() {
     List<ProductStockDTO> productsWithStock = inventoryService.findAllProductsWithTotalStock();
@@ -62,6 +56,13 @@ public class CatalogManagementController {
     return ResponseEntity.ok(product);
   }
 
+  @DeleteMapping("/products/{productId}")
+  @Transactional
+  public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+    productService.deleteProduct(productId);
+    return ResponseEntity.noContent().build();
+  }
+
   @PutMapping("/inventory/{storeId}/{productId}/stock")
   @Transactional
   public ResponseEntity<StoreInventory> updateStockCount(
@@ -72,10 +73,10 @@ public class CatalogManagementController {
     return ResponseEntity.ok(inventory);
   }
 
-  @DeleteMapping("/products/{productId}")
-  @Transactional
-  public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
-    productService.deleteProduct(productId);
-    return ResponseEntity.noContent().build();
+  @GetMapping("/stores")
+  public ResponseEntity<List<Store>> getAllStores(@RequestParam(required = false) String region) {
+    List<Store> stores = storeService.findStoresByRegion(region);
+    return ResponseEntity.ok(stores);
   }
+
 }
