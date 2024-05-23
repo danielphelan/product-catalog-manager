@@ -18,12 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DataIngestionService {
+
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   private final ProductRepository productRepository;
   private final StoreRepository storeRepository;
@@ -37,11 +41,18 @@ public class DataIngestionService {
   }
 
   @PostConstruct
-  public void loadDataOnStartUp() throws IOException {
-    loadCsvData(new ClassPathResource("product-catalog.csv").getInputStream());
+  public void loadDataOnStartUp() {
+    logger.info("Starting data loading from CSV");
+    try {
+      processCsvData(new ClassPathResource("product-catalog.csv").getInputStream());
+      logger.info("Data loading completed successfully");
+    } catch (IOException e) {
+      logger.error("Failed to load data from CSV", e);
+    }
   }
-  
-  public void loadCsvData(InputStream inputStream) {
+
+  public void processCsvData(InputStream inputStream) {
+    logger.info("Processing CSV data");
     try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
       List<String[]> rows = reader.readAll();
       List<Product> productList = new ArrayList<>();
@@ -53,12 +64,15 @@ public class DataIngestionService {
       productRepository.saveAll(productList);
       storeRepository.saveAll(storeList);
       inventoryRepository.saveAll(inventoryList);
+      logger.info("CSV data processed and saved successfully");
+
     } catch (IOException | CsvException e) {
-      e.printStackTrace();
+      logger.error("Error processing CSV data", e);
     }
   }
 
   private void parseCsvData(List<String[]> rows, List<Product> productList, List<Store> storeList, List<StoreInventory> inventoryList) {
+    logger.info("Parsing CSV data");
     Map<Integer, Product> products = new HashMap<>();
     Map<Integer, Store> stores = new HashMap();
 
@@ -102,8 +116,7 @@ public class DataIngestionService {
 
         inventoryList.add(inventory);
       } catch (NumberFormatException e) {
-        System.err.println("Error parsing numeric value: " + e.getMessage());
-        // Handle the parsing error gracefully, e.g., log the error or skip the row
+        logger.error("Error parsing numeric value", e);
       }
     }
   }
