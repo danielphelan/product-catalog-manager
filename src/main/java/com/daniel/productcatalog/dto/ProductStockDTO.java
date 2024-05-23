@@ -1,19 +1,14 @@
 package com.daniel.productcatalog.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class ProductStockDTO {
+@Data
+public class ProductStockDTO extends ProductDTO {
 
-  private Integer productId;
-  private String title;
   private Integer totalStockCount;
 
   public ProductStockDTO(Integer productId, String title, Integer totalStockCount) {
-    this.productId = productId;
-    this.title = title;
+    super(productId, title);
     this.totalStockCount = totalStockCount;
   }
 

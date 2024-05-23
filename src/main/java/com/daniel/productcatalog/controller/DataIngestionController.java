@@ -1,11 +1,10 @@
 package com.daniel.productcatalog.controller;
 
-import com.daniel.productcatalog.service.DataIngestionService;
+import com.daniel.productcatalog.service.impl.DataIngestionServiceImpl;
 import java.io.IOException;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +16,9 @@ public class DataIngestionController {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  private final DataIngestionService dataIngestionService;
+  private final DataIngestionServiceImpl dataIngestionService;
 
-  public DataIngestionController(DataIngestionService dataIngestionService) {
+  public DataIngestionController(DataIngestionServiceImpl dataIngestionService) {
     this.dataIngestionService = dataIngestionService;
   }
 

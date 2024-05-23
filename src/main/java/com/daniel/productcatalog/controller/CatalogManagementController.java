@@ -5,14 +5,13 @@ import com.daniel.productcatalog.dto.ProductStockDTO;
 import com.daniel.productcatalog.entity.Product;
 import com.daniel.productcatalog.entity.Store;
 import com.daniel.productcatalog.entity.StoreInventory;
-import com.daniel.productcatalog.service.InventoryService;
-import com.daniel.productcatalog.service.ProductService;
-import com.daniel.productcatalog.service.StoreService;
+import com.daniel.productcatalog.service.impl.InventoryServiceImpl;
+import com.daniel.productcatalog.service.impl.ProductServiceImpl;
+import com.daniel.productcatalog.service.impl.StoreServiceImpl;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +28,11 @@ public class CatalogManagementController {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  private final InventoryService inventoryService;
-  private final StoreService storeService;
-  private final ProductService productService;
+  private final InventoryServiceImpl inventoryService;
+  private final StoreServiceImpl storeService;
+  private final ProductServiceImpl productService;
 
-  public CatalogManagementController(InventoryService inventoryService, StoreService storeService, ProductService productService) {
+  public CatalogManagementController(InventoryServiceImpl inventoryService, StoreServiceImpl storeService, ProductServiceImpl productService) {
     this.inventoryService = inventoryService;
     this.storeService = storeService;
     this.productService = productService;
