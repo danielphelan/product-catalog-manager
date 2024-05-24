@@ -1,6 +1,6 @@
 package com.daniel.productcatalog.service.impl;
 
-import com.daniel.productcatalog.dto.ProductDTO;
+import com.daniel.productcatalog.dto.UpdateProductDTO;
 import com.daniel.productcatalog.entity.Product;
 import com.daniel.productcatalog.repository.ProductRepository;
 import com.daniel.productcatalog.repository.StoreInventoryRepository;
@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product updateProduct(Integer productId, ProductDTO updatedProduct) {
+  public Product updateProduct(Integer productId, UpdateProductDTO updatedProduct) {
     logger.info("Updating product with ID: {}", productId);
     Product existingProduct = getProductById(productId);
 
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     logger.info("Deleted product with ID: {}", productId);
   }
 
-  private void updateProductFields(Product existingProduct, ProductDTO updatedProduct) {
+  private void updateProductFields(Product existingProduct, UpdateProductDTO updatedProduct) {
 
     if (updatedProduct.getTitle() != null) {
       logger.info("Updating title to: {}", updatedProduct.getTitle());

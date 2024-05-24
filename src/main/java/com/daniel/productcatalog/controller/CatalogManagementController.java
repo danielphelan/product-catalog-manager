@@ -1,6 +1,6 @@
 package com.daniel.productcatalog.controller;
 
-import com.daniel.productcatalog.dto.ProductDTO;
+import com.daniel.productcatalog.dto.UpdateProductDTO;
 import com.daniel.productcatalog.dto.ProductStockDTO;
 import com.daniel.productcatalog.entity.Product;
 import com.daniel.productcatalog.entity.Store;
@@ -58,7 +58,7 @@ public class CatalogManagementController {
   @Transactional
   public ResponseEntity<Product> updateProductDetails(
       @PathVariable Integer productId,
-      @RequestBody ProductDTO updatedProduct) {
+      @RequestBody UpdateProductDTO updatedProduct) {
     logger.info("Request received to update product details for productId: {}", productId);
     Product product = productService.updateProduct(productId, updatedProduct);
     logger.info("Product details updated for productId: {}", productId);
