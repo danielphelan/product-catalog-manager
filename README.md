@@ -47,10 +47,9 @@ Application is currently deployed to a free service called Render. And testing c
 [https://product-catalog-manager.onrender.com/api/catalog/products](https://product-catalog-manager.onrender.com/api/catalog/products)
 
 
-
 ## Notes
 - Original CSV is loaded by default but additional CSV's can be uploaded which overwrites all data
 - sale_price and discount_value assumption - to operate and work with these fields, I added the ability to add a discount percentage to a product. This will be applied to the product across all stores.
 - Clear lack of tests; Would have liked more time to focus on adding these.
 - Other focus given more time would be validation throughout the application.
-
+- Secured endpoints required the header **x-api-key** with value of **daniel-and-kargo-app**
