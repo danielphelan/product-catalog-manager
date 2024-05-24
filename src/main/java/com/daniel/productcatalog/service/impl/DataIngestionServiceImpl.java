@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,17 +77,27 @@ public class DataIngestionServiceImpl implements DataIngestionService {
   private void parseCsvData(List<String[]> rows, List<Product> productList, List<Store> storeList, List<StoreInventory> inventoryList) {
     logger.info("Parsing CSV data");
     Map<Integer, Product> products = new HashMap<>();
-    Map<Integer, Store> stores = new HashMap();
+    Map<Integer, Store> stores = new HashMap<>();
 
     for (String[] row : rows.subList(1, rows.size())) { // Skip header
+      if (row == null || row.length < 7) {
+        logger.error("Skipping invalid row: insufficient data");
+        continue;
+      }
+
       try {
-        Integer productId = Integer.parseInt(row[0]);
+        Integer productId = parseInteger(row[0]);
         String title = row[1];
-        double price = Double.parseDouble(row[2]);
-        Integer storeId = Integer.parseInt(row[3]);
+        double price = parseDouble(row[2]);
+        Integer storeId = parseInteger(row[3]);
         String storeCity = row[4];
         String storeRegion = row[5];
-        int stockCount = Integer.parseInt(row[6]);
+        int stockCount = parseInteger(row[6]);
+
+        if (stockCount < 0) {
+          logger.error("Skipping row due to negative stock count");
+          continue;
+        }
 
         Product product = products.computeIfAbsent(productId, id -> {
           Product p = new Product();
@@ -111,17 +122,32 @@ public class DataIngestionServiceImpl implements DataIngestionService {
         inventoryId.setStoreId(store.getStoreId());
 
         StoreInventory inventory = new StoreInventory();
-        inventory.setStoreInventoryId(inventoryId); // Set the composite
+        inventory.setStoreInventoryId(inventoryId);
         inventory.setProduct(product);
         inventory.setStore(store);
         inventory.setStockCount(stockCount);
 
         inventoryList.add(inventory);
-      } catch (NumberFormatException e) {
-        logger.error("Error parsing numeric value", e);
+      } catch (Exception e) {
+        logger.error("Error parsing row: {}", Arrays.toString(row), e);
       }
     }
   }
+
+  private Integer parseInteger(String value) throws NumberFormatException {
+    if (value == null || value.trim().isEmpty()) {
+      throw new NumberFormatException("Integer value is null or empty");
+    }
+    return Integer.parseInt(value.trim());
+  }
+
+  private double parseDouble(String value) throws NumberFormatException {
+    if (value == null || value.trim().isEmpty()) {
+      throw new NumberFormatException("Double value is null or empty");
+    }
+    return Double.parseDouble(value.trim());
+  }
+
 }
 
 
