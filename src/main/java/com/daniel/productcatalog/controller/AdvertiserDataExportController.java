@@ -22,10 +22,10 @@ public class AdvertiserDataExportController {
   }
 
   @GetMapping("/advertisers")
-  public void exportAdvertisersData(@RequestParam(name = "format", defaultValue = "json") FormatType format, HttpServletResponse response) throws IOException {
+  public void exportAdvertisersData(@RequestParam(name = "format") FormatType format, HttpServletResponse response) throws IOException {
 
     if (format != FormatType.JSON && format != FormatType.CSV) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Format parameter must be 'json' or 'csv'");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Format parameter must be 'JSON' or 'CSV'");
     }
     inventoryService.generateAndExportInventoryForAdvertisers(format, response);
   }
